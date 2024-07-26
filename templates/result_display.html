@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposed Freight Rate</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 100%;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            padding-right: 250px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .small-box {
+            position: absolute;
+            top:10px;
+            right:20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 500px;
+            height: auto;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .small-box form {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .small-box label {
+            font-weight: bold;
+            display: block;
+            margin-right: 10px;
+        }
+
+        .small-box input[type="text"] {
+            flex: 1;
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .small-box button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .small-box button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Proposed Freight Rate</h2>
+        <div class="table-responsive">
+            {{ filtered_df | safe }}
+        </div>
+
+        <!-- Small Box with Suggested Freight Rate -->
+        <div class="small-box">
+            <form id="suggestedFreightForm" action="/suggested_rate" method="GET">
+                <label for="suggested_freight_rate">Suggested Freight Rate:</label>
+                <input type="text" id="suggested_freight_rate" name="suggested_freight_rate" placeholder="Enter Rate">
+                <button type="submit">Submit</button>
+            </form>
+            <div id="error-message" class="error-message" style="display: none;">Please enter a percentage.</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('suggestedFreightForm').addEventListener('submit', function (event) {
+            var inputField = document.getElementById('suggested_freight_rate');
+            var errorMessage = document.getElementById('error-message');
+
+            if (inputField.value.trim() === '') {
+                // Prevent form submission
+                event.preventDefault();
+
+                // Show error message
+                errorMessage.style.display = 'block';
+            } else {
+                // Hide error message if the input is valid
+                errorMessage.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
